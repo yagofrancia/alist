@@ -74,7 +74,7 @@ const babyDummy = {
 function flatten(node, list = [], keys = []) {
   if (!node.children) {
     list.push({...node, code: keys});
-    return;
+    return list;
   }
 
   const childrenKeys = Object.keys(node.children);
