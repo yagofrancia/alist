@@ -9,6 +9,12 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 32,
     padding: 20,
   },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingBottom: 20,
+  },
 });
 
 export default styles;

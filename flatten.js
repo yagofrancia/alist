@@ -44,32 +44,32 @@ const dummyAsObject = {
   },
 };
 
-const babyDummy = {
-  name: 'dfasf',
-  children: {
-    1: {
-      name: 'asdas',
-      children: {
-        1: {
-          name: 'adasd',
-          children: {
-            1: {
-              name: 'ultimo',
-            },
-          },
-        },
-      },
-    },
-    2: {
-      name: 'segundo',
-      children: {
-        1: {
-          name: 'filho do segundo',
-        },
-      },
-    },
-  },
-};
+// const babyDummy = {
+//   name: 'dfasf',
+//   children: {
+//     1: {
+//       name: 'asdas',
+//       children: {
+//         1: {
+//           name: 'adasd',
+//           children: {
+//             1: {
+//               name: 'ultimo',
+//             },
+//           },
+//         },
+//       },
+//     },
+//     2: {
+//       name: 'segundo',
+//       children: {
+//         1: {
+//           name: 'filho do segundo',
+//         },
+//       },
+//     },
+//   },
+// };
 
 function flatten(node, list = [], keys = []) {
   if (!node.children) {

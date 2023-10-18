@@ -1,9 +1,9 @@
 Wednesday
 - find better icons for create and back
-- add the flattening function
-- the flattening function must create a unique identifier for each flat item (maybe using its code (1.1.1.322))
-- add the state for storing the list
-- derive the data using the flattening function to get the list and count
+- ~~add the flattening function~~
+- ~~the flattening function must create a unique identifier for each flat item (maybe using its code (1.1.1.322))~~
+- ~~add the state for storing the list~~
+- ~~derive the data using the flattening function to get the list and count~~
 - add the trash icon
 - render the items in a flatlist
 - create items UI

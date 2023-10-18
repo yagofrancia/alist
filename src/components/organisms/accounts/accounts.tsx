@@ -2,6 +2,7 @@ import React from 'react';
 import {View} from 'react-native';
 import styles from './styles';
 import AccountService from '../../../services/account-service';
+import AccountItem from '../../molecules/account-item';
 import Text from '../../atoms/text/text';
 
 const dummyAsObject: NodeAccount = {
@@ -57,10 +58,20 @@ export default function Accounts() {
 
   return (
     <View style={styles.root}>
-      {flattenedAccounts.map(account => (
-        <Text key={account.code.join('')}>
-          {JSON.stringify(account, null, 2)}
+      <View style={styles.header}>
+        <Text typography="rubik20_auto_regular" color="darkGray">
+          Listagem
         </Text>
+        <Text typography="roboto15_auto_regular" color="lightGray">
+          {flattenedAccounts.length} registros
+        </Text>
+      </View>
+      {flattenedAccounts.map(account => (
+        <AccountItem
+          key={account.code.join('')}
+          code={account.code.join('.')}
+          name={account.name}
+        />
       ))}
     </View>
   );
