@@ -1,28 +1,35 @@
 const dummyAsObject = {
-  name: 'first',
+  name: 'root',
   children: {
     1: {
-      id: 1,
-      name: 'xis',
+      name: 'primeiro',
       children: {
         1: {
-          name: 'um',
+          name: 'segundo',
           children: {
             1: {
+              name: 'terceiro',
               children: {
-                998: {
-                  id: 998,
-                  name: 'novenoveoito',
+                997: {
+                  name: 'quarto',
                 },
                 999: {
-                  id: 999,
-                  name: 'novenovenove',
+                  name: 'quarto2',
+                },
+              },
+            },
+            2: {
+              name: 'pjsdf',
+              children: {
+                999: {
+                  name: '3434',
                 },
               },
             },
           },
         },
         2: {
+          name: 'primeiro2',
           children: {
             1: {
               name: '',
@@ -64,20 +71,19 @@ const babyDummy = {
   },
 };
 
-function flatten(node, list = []) {
+function flatten(node, list = [], keys = []) {
   if (!node.children) {
-    list.push(node);
+    list.push({...node, code: keys});
     return;
   }
 
   const childrenKeys = Object.keys(node.children);
-
   const {children, ...nodeContent} = node;
 
-  list.push(nodeContent);
+  list.push({...nodeContent, code: keys});
 
   for (let key of childrenKeys) {
-    flatten(node.children[key], list);
+    flatten(node.children[key], list, [...keys, Number(key)]);
   }
 
   return list;
