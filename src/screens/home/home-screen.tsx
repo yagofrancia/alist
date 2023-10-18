@@ -1,6 +1,7 @@
 import React from 'react';
 import ScreenContainer from '../../components/organisms/screen-container';
 import {HomeScreenProps} from '../../navigation/root-navigator/param-list';
+import Accounts from '../../components/organisms/accounts';
 
 export default function HomeScreen({navigation}: HomeScreenProps) {
   function handleRightIconPress() {
@@ -14,7 +15,7 @@ export default function HomeScreen({navigation}: HomeScreenProps) {
       rightIcon="ic_add"
       onRightIconPress={handleRightIconPress}>
       {/* <SearchBar /> */}
-      {/* <AccountList /> */}
+      <Accounts />
     </ScreenContainer>
   );
 }
