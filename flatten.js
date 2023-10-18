@@ -72,7 +72,9 @@ function flatten(node, list = []) {
 
   const childrenKeys = Object.keys(node.children);
 
-  list.push(node);
+  const {children, ...nodeContent} = node;
+
+  list.push(nodeContent);
 
   for (let key of childrenKeys) {
     flatten(node.children[key], list);
