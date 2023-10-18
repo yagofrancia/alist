@@ -59,10 +59,10 @@ export default function Accounts() {
   return (
     <View style={styles.root}>
       <View style={styles.header}>
-        <Text typography="rubik20_auto_regular" color="darkGray">
+        <Text typography="rubik20_auto_regular" color="grayDark">
           Listagem
         </Text>
-        <Text typography="roboto15_auto_regular" color="lightGray">
+        <Text typography="roboto15_auto_regular" color="grayLight">
           {flattenedAccounts.length} registros
         </Text>
       </View>

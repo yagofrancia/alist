@@ -16,6 +16,11 @@ const typographies = StyleSheet.create({
     fontSize: 16,
     fontWeight: '300',
   },
+  rubik15_auto_regular: {
+    fontFamily: 'Rubik',
+    fontSize: 15,
+    fontWeight: '500',
+  },
   rubik20_auto_regular: {
     fontFamily: 'Rubik',
     fontSize: 20,
