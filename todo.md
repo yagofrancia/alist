@@ -1,3 +1,4 @@
+Wednesday
 - find better icons for create and back
 - add the flattening function
 - the flattening function must create a unique identifier for each flat item (maybe using its code (1.1.1.322))
@@ -7,6 +8,8 @@
 - render the items in a flatlist
 - create items UI
 - create the fields in the create account screen
+
+Thursday
 - add field validation using yup and formik
 - in the insert account action button, modify the nested state using the immer.js lib to get the new immutable state. (produce)
 - after everything working in the creating and deleting, insert some db for storing this data
