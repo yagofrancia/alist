@@ -1,7 +1,7 @@
 import React, {PropsWithChildren} from 'react';
 import {Text as RNText, StyleProp, TextStyle} from 'react-native';
 import styles from './styles';
-import R from '../../../../res';
+import R from '../../../res';
 
 type TextProps = {
   typography?: keyof typeof R.typographies;

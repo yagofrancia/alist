@@ -2,7 +2,6 @@ import {StyleSheet} from 'react-native';
 
 const styles = StyleSheet.create({
   root: {
-    backgroundColor: '#622490',
     flex: 1,
   },
   headerRoot: {

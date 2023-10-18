@@ -7,7 +7,10 @@ export default function CreateAccountScreen({
   route: _r,
 }: CreateAccountScreenProps) {
   return (
-    <ScreenContainer title="Inserir Conta" rightIcon="ic_add">
+    <ScreenContainer
+      title="Inserir Conta"
+      rightIcon="ic_check"
+      leftIcon="ic_arrow_left">
       <View>
         <Text>create account screen</Text>
       </View>
