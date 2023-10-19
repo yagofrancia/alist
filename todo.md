@@ -8,7 +8,8 @@ Wednesday
 - render the items in a flatlist
 - ~~create items UI~~
 - add the rubik font
-- create the fields in the create account screen
+- ~~create the fields in the create account screen~~
+- create validation in the fields
 
 Thursday
 - add field validation using yup and formik

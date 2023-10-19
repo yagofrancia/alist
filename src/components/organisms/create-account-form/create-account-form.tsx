@@ -5,6 +5,8 @@ import LabeledInput from '../../molecules/labeled-input/labeled-input';
 import Select from '../../molecules/select';
 import TextField from '../../molecules/text-field/text-field';
 import {useFormik} from 'formik';
+import useAccounts from '../../../hooks/use-accounts';
+import * as yup from 'yup';
 
 type FormShape = {
   parentAccount: string;
@@ -14,7 +16,16 @@ type FormShape = {
   launch: boolean;
 };
 
-export default function CreateAccountForm() {
+const formValidationSchema = yup.object().shape({
+  name: yup.string().required(),
+});
+
+type CreateAccountFormProps = {
+  formRef: React.MutableRefObject<FormRef | undefined>;
+};
+
+export default function CreateAccountForm({formRef}: CreateAccountFormProps) {
+  const {flattenedAccounts} = useAccounts();
   const formik = useFormik<FormShape>({
     initialValues: {
       parentAccount: '',
@@ -24,9 +35,20 @@ export default function CreateAccountForm() {
       launch: false,
     },
     onSubmit: handleSubmit,
+    validationSchema: formValidationSchema,
+  });
+
+  React.useImperativeHandle(formRef, () => {
+    return {
+      submitForm: formik.submitForm,
+    };
   });
 
   function handleSubmit() {}
+
+  // function handleValidate() {
+  //   const errors = {};
+  // }
 
   function handlePickerChange(fieldName: keyof FormShape) {
     return function (value: boolean | string) {
@@ -41,9 +63,17 @@ export default function CreateAccountForm() {
           onChange={handlePickerChange('parentAccount')}
           value={formik.values.parentAccount}>
           <Select.Item value="" label="Selecione uma conta pai" />
-          <Select.Item value="option 1" label="Option 1" />
-          <Select.Item value="option 2" label="Option 2" />
-          <Select.Item value="option 3" label="Option 3" />
+          {flattenedAccounts.map(account => {
+            const identifier = account.code.join('.');
+            return (
+              <Select.Item
+                key={identifier}
+                value={identifier}
+                label={identifier}
+              />
+            );
+          })}
+          {/* <Select.Item value="option 3" label="Option 3" /> */}
           {/* Dynamically filled */}
         </Select>
       </LabeledInput>

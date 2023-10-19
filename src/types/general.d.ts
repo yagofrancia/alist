@@ -7,3 +7,7 @@ type Account = {
   name: string;
   code: Array<number>;
 };
+
+type FormRef = {
+  submitForm: () => void;
+};
