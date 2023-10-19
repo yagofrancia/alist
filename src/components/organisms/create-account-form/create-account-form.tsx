@@ -144,13 +144,16 @@ export default function CreateAccountForm({formRef}: CreateAccountFormProps) {
   function handleParentAccountChange(value: string | boolean) {
     formik.setFieldValue('parentAccount', value);
 
-    const suggestion = AccountService.suggestNodes(
+    const {parent, children} = AccountService.suggestNodes(
       (value as string).split('.'),
       accounts.children ?? {},
     );
 
-    console.log({suggestion});
-    // do the logic for code suggestion based in the parent account code (value)
+    formik.setValues({
+      ...formik.values,
+      code: children.join('.'),
+      parentAccount: parent.join('.'),
+    });
   }
 
   return (
