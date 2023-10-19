@@ -11,7 +11,9 @@ Wednesday
 Thursday
 - ~~add field validation using yup and formik~~
 - ~~in the insert account action button, modify the nested state using the immer.js lib to get the new immutable state. (produce)~~
-- do the suggestion logic after selecting the parent account
+- ~~do the suggestion logic after selecting the parent account~~
+- finish modal UI
+- differ colors in account listing based on account type
 - after everything working in the creating and deleting, insert some db for storing this data
 - the db must store just the list. (realmdb?)
 - make the search work (peharps using some hook to improve performance and debounce)
