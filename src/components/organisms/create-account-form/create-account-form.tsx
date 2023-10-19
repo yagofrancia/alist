@@ -181,12 +181,14 @@ export default function CreateAccountForm({formRef}: CreateAccountFormProps) {
         <TextField
           value={formik.values.code}
           onChange={formik.handleChange('code')}
+          placeholder="Insira um código"
         />
       </LabeledInput>
       <LabeledInput label="Nome" error={formik.errors.name}>
         <TextField
           value={formik.values.name}
           onChange={formik.handleChange('name')}
+          placeholder="Exemplo: Taxa condominial..."
         />
       </LabeledInput>
       <LabeledInput label="Tipo">
