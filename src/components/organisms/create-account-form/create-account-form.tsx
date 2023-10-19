@@ -141,11 +141,17 @@ export default function CreateAccountForm({formRef}: CreateAccountFormProps) {
     };
   }
 
+  function handleParentAccountChange(value: string | boolean) {
+    formik.setFieldValue('parentAccount', value);
+
+    // do the logic for code suggestion based in the parent account code (value)
+  }
+
   return (
     <View style={styles.root}>
       <LabeledInput label="Conta pai">
         <Select
-          onChange={handlePickerChange('parentAccount')}
+          onChange={handleParentAccountChange}
           value={formik.values.parentAccount}>
           <Select.Item value="" label="Nenhuma" />
           {flattenedAccounts
