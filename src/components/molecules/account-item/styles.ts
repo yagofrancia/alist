@@ -13,9 +13,6 @@ const styles = StyleSheet.create({
   label: {
     flex: 1,
   },
-  bold: {
-    flexWrap: 'nowrap',
-  },
 });
 
 export default styles;

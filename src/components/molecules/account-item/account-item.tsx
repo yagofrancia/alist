@@ -17,14 +17,14 @@ export default function AccountItem({code, name}: AccountItemProps) {
   function handleDeletePress() {
     showAlert({
       message: (
-        <Text typography="roboto16_auto_regular">
-          Deseja excluir a conta
-          <Text typography="roboto16_bold_regular" style={styles.bold}>
-            {' '}
+        <>
+          <Text typography="roboto16_auto_regular">Deseja excluir a conta</Text>
+          <Text typography="roboto16_bold_regular">
+            {'\n '}
             {label}
           </Text>
           ?
-        </Text>
+        </>
       ),
       confirmText: 'Com certeza',
       dismissText: 'Não!',
