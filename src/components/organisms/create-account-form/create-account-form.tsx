@@ -16,8 +16,21 @@ type FormShape = {
   launch: boolean;
 };
 
+function isHierarchicalCode(value: string) {
+  const pattern = /^(?:[1-9]\d{0,2}(\.|$))+$/;
+  return pattern.test(value);
+}
+
 const formValidationSchema = yup.object().shape({
-  name: yup.string().required(),
+  name: yup.string().required('É necessário o nome da conta'),
+  code: yup
+    .string()
+    .required('É necessário o código da conta')
+    .test(
+      'is-hierarquical',
+      'O Código deve ter o formato X.XXX',
+      isHierarchicalCode,
+    ),
 });
 
 type CreateAccountFormProps = {
@@ -36,6 +49,7 @@ export default function CreateAccountForm({formRef}: CreateAccountFormProps) {
     },
     onSubmit: handleSubmit,
     validationSchema: formValidationSchema,
+    validateOnChange: false,
   });
 
   React.useImperativeHandle(formRef, () => {
@@ -44,11 +58,9 @@ export default function CreateAccountForm({formRef}: CreateAccountFormProps) {
     };
   });
 
-  function handleSubmit() {}
-
-  // function handleValidate() {
-  //   const errors = {};
-  // }
+  function handleSubmit() {
+    // the code that is run after a successful validation
+  }
 
   function handlePickerChange(fieldName: keyof FormShape) {
     return function (value: boolean | string) {
@@ -62,7 +74,7 @@ export default function CreateAccountForm({formRef}: CreateAccountFormProps) {
         <Select
           onChange={handlePickerChange('parentAccount')}
           value={formik.values.parentAccount}>
-          <Select.Item value="" label="Selecione uma conta pai" />
+          <Select.Item value="" label="Nenhuma" />
           {flattenedAccounts.map(account => {
             const identifier = account.code.join('.');
             return (
@@ -73,17 +85,15 @@ export default function CreateAccountForm({formRef}: CreateAccountFormProps) {
               />
             );
           })}
-          {/* <Select.Item value="option 3" label="Option 3" /> */}
-          {/* Dynamically filled */}
         </Select>
       </LabeledInput>
-      <LabeledInput label="Código">
+      <LabeledInput label="Código" error={formik.errors.code}>
         <TextField
           value={formik.values.code}
           onChange={formik.handleChange('code')}
         />
       </LabeledInput>
-      <LabeledInput label="Nome">
+      <LabeledInput label="Nome" error={formik.errors.name}>
         <TextField
           value={formik.values.name}
           onChange={formik.handleChange('name')}

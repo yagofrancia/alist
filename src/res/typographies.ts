@@ -1,10 +1,10 @@
 import {StyleSheet} from 'react-native';
 
 const typographies = StyleSheet.create({
-  roboto22_auto_bold: {
+  roboto13_auto_regular: {
     fontFamily: 'Roboto',
-    fontSize: 22,
-    fontWeight: '700',
+    fontSize: 13,
+    fontWeight: '400',
   },
   roboto15_auto_regular: {
     fontFamily: 'Roboto',
@@ -15,6 +15,11 @@ const typographies = StyleSheet.create({
     fontFamily: 'Roboto',
     fontSize: 16,
     fontWeight: '300',
+  },
+  roboto22_auto_bold: {
+    fontFamily: 'Roboto',
+    fontSize: 22,
+    fontWeight: '700',
   },
   rubik15_auto_regular: {
     fontFamily: 'Rubik',

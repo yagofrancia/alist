@@ -14,7 +14,7 @@ type TextFieldProps = {
 
 export default function TextField({editable, value, onChange}: TextFieldProps) {
   function handleChange(e: NativeSyntheticEvent<TextInputChangeEventData>) {
-    onChange(e as unknown as React.ChangeEvent<any>);
+    onChange(e.nativeEvent.text);
   }
   return (
     <TextInput

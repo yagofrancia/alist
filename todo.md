@@ -17,6 +17,8 @@ Thursday
 - after everything working in the creating and deleting, insert some db for storing this data
 - the db must store just the list. (realmdb?)
 - make the search work (peharps using some hook to improve performance and debounce)
+- add scrollviews to where is needed
 
 extras:
 - make the searchbar floating
+- outline in red fields that has errors

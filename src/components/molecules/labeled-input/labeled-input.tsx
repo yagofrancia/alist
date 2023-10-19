@@ -5,12 +5,22 @@ import styles from './styles';
 
 type LabeledInputProps = {
   label: string;
+  error?: string;
+  preserveErrorPlace?: boolean;
 };
 
 export default function LabeledInput({
   label,
   children,
+  error,
+  preserveErrorPlace = false,
 }: PropsWithChildren<LabeledInputProps>) {
+  const errorUI = error ? (
+    <Text typography="roboto13_auto_regular" color="alert" style={styles.error}>
+      {error}
+    </Text>
+  ) : null;
+
   return (
     <View style={styles.root}>
       <Text
@@ -20,6 +30,11 @@ export default function LabeledInput({
         {label}
       </Text>
       {children}
+      {preserveErrorPlace ? (
+        <View style={styles.errorPlaceholder}>{errorUI}</View>
+      ) : (
+        errorUI
+      )}
     </View>
   );
 }

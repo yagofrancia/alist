@@ -7,6 +7,12 @@ const styles = StyleSheet.create({
   label: {
     paddingBottom: 3,
   },
+  error: {
+    marginLeft: 5,
+  },
+  errorPlaceholder: {
+    height: 20,
+  },
 });
 
 export default styles;
