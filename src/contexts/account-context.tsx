@@ -7,29 +7,40 @@ type AccountContextType = {
 
 const dummyAsObject: NodeAccount = {
   name: 'root',
+  isRevenue: true,
+  launch: true,
   children: {
     1: {
       name: 'primeiro',
+      isRevenue: true,
+      launch: true,
       children: {
         1: {
           name: 'segundo',
+          isRevenue: true,
+          launch: true,
           children: {
             1: {
               name: 'terceiro',
+              isRevenue: true,
+              launch: true,
               children: {
-                997: {
-                  name: 'quarto',
-                },
                 999: {
                   name: 'quarto2',
+                  isRevenue: true,
+                  launch: true,
                 },
               },
             },
             2: {
               name: 'pjsdf',
+              isRevenue: true,
+              launch: true,
               children: {
-                999: {
+                1: {
                   name: '3434',
+                  isRevenue: true,
+                  launch: true,
                 },
               },
             },
@@ -37,12 +48,13 @@ const dummyAsObject: NodeAccount = {
         },
         2: {
           name: 'primeiro2',
+          isRevenue: true,
+          launch: true,
           children: {
-            1: {
-              name: 'onebutlast',
-            },
             999: {
               name: 'last',
+              isRevenue: true,
+              launch: true,
             },
           },
         },

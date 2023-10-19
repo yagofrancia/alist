@@ -1,31 +1,42 @@
 const dummyAsObject = {
-  1: {
-    id: 1,
-    children: {
-      1: {
-        name: 'um',
-        children: {
-          1: {
-            children: {
-              998: {
-                id: 998,
-                name: 'novenoveoito',
+  name: 'root',
+  children: {
+    1: {
+      name: 'primeiro',
+      children: {
+        1: {
+          name: 'segundo',
+          children: {
+            1: {
+              name: 'terceiro',
+              children: {
+                997: {
+                  name: 'quarto',
+                },
+                999: {
+                  name: 'quarto2',
+                },
               },
-              999: {
-                id: 999,
-                name: 'novenovenove',
+            },
+            2: {
+              name: 'pjsdf',
+              children: {
+                999: {
+                  name: '3434',
+                },
               },
             },
           },
         },
-      },
-      2: {
-        children: {
-          1: {
-            name: '',
-          },
-          999: {
-            name: 'nonoonnono',
+        2: {
+          name: 'primeiro2',
+          children: {
+            1: {
+              name: 'onebutlast',
+            },
+            999: {
+              name: 'last',
+            },
           },
         },
       },
@@ -49,7 +60,9 @@ function suggestNewParent(parentIndex) {
 
 function getNodeById(nodes, ids) {
   const node = nodes[ids[0]];
-  if (ids.length === 1) return node;
+  if (ids.length === 1 || !node.children) {
+    return node;
+  }
 
   return getNodeById(node.children, ids.slice(1));
 }
@@ -60,4 +73,6 @@ function getLatestChildId(node) {
   return idMax;
 }
 
-console.log(suggestNewParent([1, 2]));
+// console.log(suggestNewParent([1, 2]));
+
+console.log(getNodeById(dummyAsObject.children, [1, 1, 1]));

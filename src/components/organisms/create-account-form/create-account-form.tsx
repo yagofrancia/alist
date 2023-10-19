@@ -7,6 +7,9 @@ import TextField from '../../molecules/text-field/text-field';
 import {useFormik} from 'formik';
 import useAccounts from '../../../hooks/use-accounts';
 import * as yup from 'yup';
+import {produce} from 'immer';
+import AccountService from '../../../services/account-service';
+import {useNavigation} from '@react-navigation/native';
 
 type FormShape = {
   parentAccount: string;
@@ -38,7 +41,8 @@ type CreateAccountFormProps = {
 };
 
 export default function CreateAccountForm({formRef}: CreateAccountFormProps) {
-  const {flattenedAccounts} = useAccounts();
+  const {flattenedAccounts, accounts, setAccounts} = useAccounts();
+  const navigation = useNavigation();
   const formik = useFormik<FormShape>({
     initialValues: {
       parentAccount: '',
@@ -59,7 +63,33 @@ export default function CreateAccountForm({formRef}: CreateAccountFormProps) {
   });
 
   function handleSubmit() {
-    // the code that is run after a successful validation
+    // const hasParent = !!formik.values.parentAccount;
+    const newCode = formik.values.code.split('.');
+    const newIndex = newCode[newCode.length - 1];
+
+    const parentCode = formik.values.parentAccount.split('.');
+
+    const nextState = produce(accounts, draft => {
+      const parentNode = AccountService.getNodeById(
+        draft.children ?? {},
+        parentCode,
+      );
+
+      const newNode: NodeAccount = {
+        name: formik.values.name,
+        isRevenue: formik.values.isRevenue,
+        launch: formik.values.launch,
+      };
+
+      if (parentNode.children) {
+        parentNode.children[newIndex] = newNode;
+      } else {
+        parentNode.children = newNode;
+      }
+    });
+
+    setAccounts(nextState);
+    navigation.goBack();
   }
 
   function handlePickerChange(fieldName: keyof FormShape) {
