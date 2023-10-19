@@ -10,7 +10,7 @@ Wednesday
 
 Thursday
 - ~~add field validation using yup and formik~~
-- in the insert account action button, modify the nested state using the immer.js lib to get the new immutable state. (produce)
+- ~~in the insert account action button, modify the nested state using the immer.js lib to get the new immutable state. (produce)~~
 - do the suggestion logic after selecting the parent account
 - after everything working in the creating and deleting, insert some db for storing this data
 - the db must store just the list. (realmdb?)
@@ -25,3 +25,4 @@ extras:
 - add a mask in the text for enter account code
 - add the rubik font
 - find better icons for create and back icons
+- add placeholder to texts

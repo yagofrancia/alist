@@ -41,3 +41,22 @@ export function getLatestChildId(node: NodeAccount) {
   const idMax = Math.max(...keys);
   return idMax;
 }
+
+export function suggestNodes(
+  parentIndex: Array<string>,
+  rootNode: Record<string, NodeAccount>,
+) {
+  const parent = getNodeById(rootNode, parentIndex);
+  if (!parent.children) {
+    return {parent: parentIndex, children: [...parentIndex, 1]};
+  }
+  const latestChildId = getLatestChildId(parent);
+
+  if (latestChildId === 999) {
+    return suggestNodes(parentIndex.slice(0, parentIndex.length - 1), rootNode);
+  } else {
+    return {parent: parentIndex, children: [...parentIndex, latestChildId + 1]};
+  }
+}
+
+// suggestNodes([1,1], accounts.children)
