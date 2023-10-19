@@ -4,8 +4,8 @@ import styles from './styles';
 import {View} from 'react-native';
 
 type SelectProps = {
-  value: string;
-  onChange: (value: string) => void;
+  value: string | boolean;
+  onChange: (value: string | boolean) => void;
 };
 
 function Select({value, onChange, children}: PropsWithChildren<SelectProps>) {

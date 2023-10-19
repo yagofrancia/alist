@@ -28,11 +28,17 @@ export default function CreateAccountForm() {
 
   function handleSubmit() {}
 
+  function handlePickerChange(fieldName: keyof FormShape) {
+    return function (value: boolean | string) {
+      formik.setFieldValue(fieldName, value);
+    };
+  }
+
   return (
     <View style={styles.root}>
       <LabeledInput label="Conta pai">
         <Select
-          onChange={formik.handleChange('parentAccount')}
+          onChange={handlePickerChange('parentAccount')}
           value={formik.values.parentAccount}>
           <Select.Item value="" label="Selecione uma conta pai" />
           <Select.Item value="option 1" label="Option 1" />
@@ -55,7 +61,7 @@ export default function CreateAccountForm() {
       </LabeledInput>
       <LabeledInput label="Tipo">
         <Select
-          onChange={formik.handleChange('isRevenue')}
+          onChange={handlePickerChange('isRevenue')}
           value={formik.values.isRevenue}>
           <Select.Item value={true} label="Receita" />
           <Select.Item value={false} label="Custo" />
@@ -63,7 +69,7 @@ export default function CreateAccountForm() {
       </LabeledInput>
       <LabeledInput label="Aceita lançamentos">
         <Select
-          onChange={formik.handleChange('launch')}
+          onChange={handlePickerChange('launch')}
           value={formik.values.launch}>
           <Select.Item value={false} label="Não" />
           <Select.Item value={true} label="Sim" />
