@@ -10,6 +10,7 @@ import * as yup from 'yup';
 import {produce} from 'immer';
 import AccountService from '../../../services/account-service';
 import {useNavigation} from '@react-navigation/native';
+import TextService from '../../../services/text-service';
 
 type FormShape = {
   parentAccount: string;
@@ -54,6 +55,7 @@ export default function CreateAccountForm({formRef}: CreateAccountFormProps) {
     onSubmit: handleSubmit,
     validationSchema: formValidationSchema,
     validateOnChange: false,
+    validate: handleValidate,
   });
 
   React.useImperativeHandle(formRef, () => {
@@ -61,6 +63,40 @@ export default function CreateAccountForm({formRef}: CreateAccountFormProps) {
       submitForm: formik.submitForm,
     };
   });
+
+  function handleValidate() {
+    const errors = {} as FormShape;
+    const code = formik.values.code;
+
+    if (flattenedAccounts.some(account => account.code.join('.') === code)) {
+      errors.code = 'Código já existente';
+    }
+
+    if (
+      !!formik.values.parentAccount &&
+      AccountService.getNodeById(
+        accounts.children ?? {},
+        formik.values.parentAccount.split('.'),
+      ).isRevenue !== formik.values.isRevenue
+    ) {
+      errors.code = 'A conta filha e pai devem ser do mesmo tipo';
+    }
+
+    if (
+      !formik.values.parentAccount &&
+      formik.values.code.split('.').length > 1
+    ) {
+      errors.code = 'Para criar uma conta filha, selecione uma conta pai';
+    }
+
+    if (
+      !TextService.startsWith(formik.values.code, formik.values.parentAccount)
+    ) {
+      errors.code = `O código deve iniciar com ${formik.values.parentAccount}`;
+    }
+
+    return errors;
+  }
 
   function handleSubmit() {
     const hasParent = !!formik.values.parentAccount;
@@ -112,16 +148,18 @@ export default function CreateAccountForm({formRef}: CreateAccountFormProps) {
           onChange={handlePickerChange('parentAccount')}
           value={formik.values.parentAccount}>
           <Select.Item value="" label="Nenhuma" />
-          {flattenedAccounts.map(account => {
-            const identifier = account.code.join('.');
-            return (
-              <Select.Item
-                key={identifier}
-                value={identifier}
-                label={identifier}
-              />
-            );
-          })}
+          {flattenedAccounts
+            .filter(account => !account.launch)
+            .map(account => {
+              const identifier = account.code.join('.');
+              return (
+                <Select.Item
+                  key={identifier}
+                  value={identifier}
+                  label={identifier}
+                />
+              );
+            })}
         </Select>
       </LabeledInput>
       <LabeledInput label="Código" error={formik.errors.code}>
