@@ -11,6 +11,11 @@ const typographies = StyleSheet.create({
     fontSize: 15,
     fontWeight: '400',
   },
+  roboto15_bold_regular: {
+    fontFamily: 'Roboto',
+    fontSize: 15,
+    fontWeight: '700',
+  },
   roboto16_auto_regular: {
     fontFamily: 'Roboto',
     fontSize: 16,

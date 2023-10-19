@@ -4,17 +4,20 @@ import RootNavigator from './navigation/root-navigator';
 import GlobalComponents from './components/organisms/global-components';
 import NavigatorWrapper from './navigation/root-navigator/navigator-wrapper';
 import {AccountProvider} from './contexts/account-context';
+import {PaperProvider} from 'react-native-paper';
 
 function App(): JSX.Element {
   return (
-    <NavigationContainer>
-      <NavigatorWrapper>
-        <AccountProvider>
-          <RootNavigator />
-        </AccountProvider>
-      </NavigatorWrapper>
-      <GlobalComponents />
-    </NavigationContainer>
+    <PaperProvider>
+      <NavigationContainer>
+        <NavigatorWrapper>
+          <AccountProvider>
+            <RootNavigator />
+          </AccountProvider>
+        </NavigatorWrapper>
+        <GlobalComponents />
+      </NavigationContainer>
+    </PaperProvider>
   );
 }
 
