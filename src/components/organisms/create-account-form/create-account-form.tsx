@@ -63,30 +63,37 @@ export default function CreateAccountForm({formRef}: CreateAccountFormProps) {
   });
 
   function handleSubmit() {
-    // const hasParent = !!formik.values.parentAccount;
+    const hasParent = !!formik.values.parentAccount;
     const newCode = formik.values.code.split('.');
     const newIndex = newCode[newCode.length - 1];
-
     const parentCode = formik.values.parentAccount.split('.');
 
-    const nextState = produce(accounts, draft => {
-      const parentNode = AccountService.getNodeById(
-        draft.children ?? {},
-        parentCode,
-      );
+    const newNode: NodeAccount = {
+      name: formik.values.name,
+      isRevenue: formik.values.isRevenue,
+      launch: formik.values.launch,
+    };
 
-      const newNode: NodeAccount = {
-        name: formik.values.name,
-        isRevenue: formik.values.isRevenue,
-        launch: formik.values.launch,
-      };
+    const nextState = hasParent
+      ? produce(accounts, draft => {
+          const parentNode = AccountService.getNodeById(
+            draft.children ?? {},
+            parentCode,
+          );
 
-      if (parentNode.children) {
-        parentNode.children[newIndex] = newNode;
-      } else {
-        parentNode.children = newNode;
-      }
-    });
+          if (parentNode.children) {
+            parentNode.children[newIndex] = newNode;
+          } else {
+            parentNode.children = newNode;
+          }
+        })
+      : produce(accounts, draft => {
+          if (draft.children) {
+            draft.children[newIndex] = newNode;
+          } else {
+            draft.children = newNode;
+          }
+        });
 
     setAccounts(nextState);
     navigation.goBack();

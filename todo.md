@@ -18,6 +18,7 @@ Thursday
 - the db must store just the list. (realmdb?)
 - make the search work (peharps using some hook to improve performance and debounce)
 - add scrollviews to where is needed
+- create the modal UI and functionality
 
 extras:
 - make the searchbar floating
