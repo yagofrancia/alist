@@ -17,15 +17,22 @@ export default function AccountItem({code, name}: AccountItemProps) {
   function handleDeletePress() {
     showAlert({
       message: (
-        <Text typography="roboto15_auto_regular">
+        <Text typography="roboto16_auto_regular">
           Deseja excluir a conta
-          <Text typography="roboto15_bold_regular"> {label}</Text>?
+          <Text typography="roboto16_bold_regular" style={styles.bold}>
+            {' '}
+            {label}
+          </Text>
+          ?
         </Text>
       ),
       confirmText: 'Com certeza',
+      dismissText: 'Não!',
       onConfirm() {
         removeAccount(code.split('.'));
       },
+      image: 'ic_bin',
+      imageColor: 'alert',
     });
   }
   return (

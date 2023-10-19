@@ -7,10 +7,10 @@ const styles = StyleSheet.create({
   },
   content: {
     maxHeight: 400,
-    marginHorizontal: 20,
+    marginHorizontal: 50,
     backgroundColor: R.colors.foreground,
     borderRadius: 20,
-    padding: 20,
+    padding: 30,
   },
 });
 
