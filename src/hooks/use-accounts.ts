@@ -85,6 +85,10 @@ export default function useAccounts() {
         throw new Error('Error while deleting account');
       }
       delete parentNode.children[childKey];
+
+      if (Object.keys(parentNode.children).length === 0) {
+        delete parentNode.children;
+      }
     });
     setAccounts(newState);
   }
