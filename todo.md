@@ -23,6 +23,7 @@ Thursday
 - add a validation rule to prevent changing isRevenue if has children
 - add a validation rule to prevent changing launch to true if has children
 - add account code in the header when editing
+- the isRevenue validation difference from parent must be shown in the isRevenue select
 
 extras:
 - make the searchbar floating

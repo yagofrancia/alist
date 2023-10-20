@@ -147,7 +147,7 @@ export default function CreateAccountForm({
           if (parentNode.children) {
             parentNode.children[newIndex] = newNode;
           } else {
-            parentNode.children = newNode;
+            parentNode.children = {'1': newNode};
           }
         })
       : produce(accounts, draft => {
