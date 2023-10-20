@@ -12,7 +12,9 @@ export default function CreateAccountScreen({route}: CreateAccountScreenProps) {
 
   return (
     <ScreenContainer
-      title="Inserir Conta"
+      title={
+        route.params ? `Editar Conta ${route.params.code}` : 'Inserir Conta'
+      }
       rightIcon="ic_check"
       leftIcon="ic_arrow_left"
       onRightIconPress={handleRightIconPress}>

@@ -12,18 +12,19 @@ Thursday
 - ~~add field validation using yup and formik~~
 - ~~in the insert account action button, modify the nested state using the immer.js lib to get the new immutable state. (produce)~~
 - ~~do the suggestion logic after selecting the parent account~~
-- finish modal UI
-- differ colors in account listing based on account type
-- after everything working in the creating and deleting, insert some db for storing this data
-- the db must store just the list. (realmdb?)
+- ~~finish modal UI~~
+- ~~differ colors in account listing based on account type~~
+- ~~after everything working in the creating and deleting, insert some db for storing this data~~
+- ~~the db must store just the list. (realmdb?)~~
+- ~~add scrollviews to where is needed~~
+- ~~create the modal UI and functionality~~
+- ~~render the items in a flatlist~~
+- ~~add a validation rule to prevent changing isRevenue if has children~~
+- ~~add a validation rule to prevent changing launch to true if has children~~
+- ~~the isRevenue validation difference from parent must be shown in the isRevenue select~~
+- ~~add account code in the header when editing~~
 - make the search work (peharps using some hook to improve performance and debounce)
-- add scrollviews to where is needed
-- create the modal UI and functionality
-- render the items in a flatlist
-- add a validation rule to prevent changing isRevenue if has children
-- add a validation rule to prevent changing launch to true if has children
-- add account code in the header when editing
-- the isRevenue validation difference from parent must be shown in the isRevenue select
+- clean the code, removing commentary and logs
 
 extras:
 - make the searchbar floating

@@ -55,6 +55,7 @@ export default function CreateAccountForm({
     useAccounts();
   const isEdit = !!params;
   const navigation = useNavigation();
+  const originalAccount = React.useRef(params);
   const formik = useFormik<FormShape>({
     initialValues: {
       parentAccount: isEdit ? params?.parentCode : '',
@@ -76,8 +77,12 @@ export default function CreateAccountForm({
   });
 
   function handleValidate() {
-    const errors = {} as FormShape;
+    const errors = {} as {code: string; isRevenue: string; launch: string};
     const code = formik.values.code;
+    const node = AccountService.getNodeById(
+      accounts.children ?? {},
+      formik.values.code.split('.'),
+    );
 
     if (
       !isEdit &&
@@ -93,7 +98,7 @@ export default function CreateAccountForm({
         formik.values.parentAccount.split('.'),
       ).isRevenue !== formik.values.isRevenue
     ) {
-      errors.code = 'A conta filha e pai devem ser do mesmo tipo';
+      errors.isRevenue = 'A conta filha e pai devem ser do mesmo tipo';
     }
 
     if (
@@ -107,6 +112,20 @@ export default function CreateAccountForm({
       !TextService.startsWith(formik.values.code, formik.values.parentAccount)
     ) {
       errors.code = `O código deve iniciar com ${formik.values.parentAccount}`;
+    }
+
+    if (
+      isEdit &&
+      originalAccount.current?.isRevenue !== formik.values.isRevenue &&
+      node.children
+    ) {
+      errors.isRevenue =
+        'Não é possível alterar o tipo para uma conta com subcontas';
+    }
+
+    if (isEdit && formik.values.launch && node.children) {
+      errors.launch =
+        'Essa conta já possui subcontas, não pode aceitar lançamentos';
     }
 
     return errors;
@@ -194,7 +213,7 @@ export default function CreateAccountForm({
             placeholder="Exemplo: Taxa condominial..."
           />
         </LabeledInput>
-        <LabeledInput label="Tipo">
+        <LabeledInput label="Tipo" error={formik.errors.isRevenue}>
           <Select
             onChange={handlePickerChange('isRevenue')}
             value={formik.values.isRevenue}>
@@ -202,7 +221,7 @@ export default function CreateAccountForm({
             <Select.Item value={false} label="Custo" />
           </Select>
         </LabeledInput>
-        <LabeledInput label="Aceita lançamentos">
+        <LabeledInput label="Aceita lançamentos" error={formik.errors.launch}>
           <Select
             onChange={handlePickerChange('launch')}
             value={formik.values.launch}>
