@@ -48,7 +48,9 @@ export default function AccountItem({code, name, ...rest}: AccountItemProps) {
   return (
     <TouchableOpacity onPress={handlePress}>
       <View style={styles.root}>
-        <Text style={styles.label} color="greenDark">
+        <Text
+          style={styles.label}
+          color={rest.isRevenue ? 'greenDark' : 'alert'}>
           {label}
         </Text>
         <Icon

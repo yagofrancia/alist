@@ -2,6 +2,7 @@ import React from 'react';
 import AccountContext from '../contexts/account-context';
 import AccountService from '../services/account-service';
 import {produce} from 'immer';
+import RepositoryService from '../services/repository-service';
 
 type AccountUpdate = {
   code: string;
@@ -22,7 +23,7 @@ export default function useAccounts() {
   const {accounts, setAccounts} = React.useContext(AccountContext);
   const flattenedAccounts = AccountService.flatten(accounts).splice(1);
 
-  function createAccount(params: AccountCreate) {
+  async function createAccount(params: AccountCreate) {
     const {parentAccount, code, name, isRevenue, launch} = params;
 
     const hasParent = !!parentAccount;
@@ -46,17 +47,18 @@ export default function useAccounts() {
           if (parentNode.children) {
             parentNode.children[newIndex] = newNode;
           } else {
-            parentNode.children = {'1': newNode};
+            parentNode.children = {[newIndex]: newNode};
           }
         })
       : produce(accounts, draft => {
           if (draft.children) {
             draft.children[newIndex] = newNode;
           } else {
-            draft.children = newNode;
+            draft.children = {[newIndex]: newNode};
           }
         });
     setAccounts(newState);
+    updateDatabase(newState);
   }
 
   function updateAccount(params: AccountUpdate) {
@@ -70,16 +72,17 @@ export default function useAccounts() {
       node.name = params.name ?? node.name;
     });
     setAccounts(newState);
+    updateDatabase(newState);
   }
 
   function removeAccount(identifier: string[]) {
     const newState = produce(accounts, draft => {
       const childKey = identifier[identifier.length - 1];
       const parentIdentifier = identifier.slice(0, identifier.length - 1);
-      const parentNode = AccountService.getNodeById(
-        draft.children ?? {},
-        parentIdentifier,
-      );
+      const parentNode =
+        parentIdentifier.length === 0
+          ? draft
+          : AccountService.getNodeById(draft.children ?? {}, parentIdentifier);
 
       if (!parentNode.children) {
         throw new Error('Error while deleting account');
@@ -91,6 +94,15 @@ export default function useAccounts() {
       }
     });
     setAccounts(newState);
+    updateDatabase(newState);
+  }
+
+  async function updateDatabase(newState: NodeAccount) {
+    const realm = await RepositoryService.getRealm();
+    realm.write(() => {
+      realm.deleteAll();
+      realm.create('NodeAccount', {id: '0', data: JSON.stringify(newState)});
+    });
   }
 
   return {
