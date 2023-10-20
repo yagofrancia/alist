@@ -23,6 +23,8 @@ export default function Accounts() {
           key={account.code.join('')}
           code={account.code.join('.')}
           name={account.name}
+          isRevenue={account.isRevenue}
+          launch={account.launch}
         />
       ))}
     </View>

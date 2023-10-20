@@ -3,9 +3,7 @@ import {CreateAccountScreenProps} from '../../navigation/root-navigator/param-li
 import ScreenContainer from '../../components/organisms/screen-container';
 import CreateAccountForm from '../../components/organisms/create-account-form';
 
-export default function CreateAccountScreen({
-  route: _r,
-}: CreateAccountScreenProps) {
+export default function CreateAccountScreen({route}: CreateAccountScreenProps) {
   const formRef = React.useRef<FormRef>();
 
   function handleRightIconPress() {
@@ -18,7 +16,7 @@ export default function CreateAccountScreen({
       rightIcon="ic_check"
       leftIcon="ic_arrow_left"
       onRightIconPress={handleRightIconPress}>
-      <CreateAccountForm formRef={formRef} />
+      <CreateAccountForm formRef={formRef} params={route.params} />
     </ScreenContainer>
   );
 }

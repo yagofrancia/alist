@@ -1,5 +1,5 @@
 import React from 'react';
-import {View} from 'react-native';
+import {Button, View} from 'react-native';
 import styles from './styles';
 import LabeledInput from '../../molecules/labeled-input/labeled-input';
 import Select from '../../molecules/select';
@@ -11,6 +11,7 @@ import {produce} from 'immer';
 import AccountService from '../../../services/account-service';
 import {useNavigation} from '@react-navigation/native';
 import TextService from '../../../services/text-service';
+import Text from '../../atoms/text/text';
 
 type FormShape = {
   parentAccount: string;
@@ -39,18 +40,31 @@ const formValidationSchema = yup.object().shape({
 
 type CreateAccountFormProps = {
   formRef: React.MutableRefObject<FormRef | undefined>;
+  params?: {
+    name: string;
+    code: string;
+    isRevenue: boolean;
+    launch: boolean;
+    parentCode: string;
+  };
 };
 
-export default function CreateAccountForm({formRef}: CreateAccountFormProps) {
-  const {flattenedAccounts, accounts, setAccounts} = useAccounts();
+export default function CreateAccountForm({
+  formRef,
+  params,
+}: CreateAccountFormProps) {
+  const {flattenedAccounts, accounts, setAccounts, updateAccount} =
+    useAccounts();
+  const isEdit = !!params;
+  const originalAccount = React.useRef({...params});
   const navigation = useNavigation();
   const formik = useFormik<FormShape>({
     initialValues: {
-      parentAccount: '',
-      code: '',
-      name: '',
-      isRevenue: false,
-      launch: false,
+      parentAccount: isEdit ? params?.parentCode : '',
+      code: isEdit ? params.code : '',
+      name: isEdit ? params.name : '',
+      isRevenue: isEdit ? params.isRevenue : false,
+      launch: isEdit ? params.isRevenue : false,
     },
     onSubmit: handleSubmit,
     validationSchema: formValidationSchema,
@@ -68,7 +82,10 @@ export default function CreateAccountForm({formRef}: CreateAccountFormProps) {
     const errors = {} as FormShape;
     const code = formik.values.code;
 
-    if (flattenedAccounts.some(account => account.code.join('.') === code)) {
+    if (
+      !isEdit &&
+      flattenedAccounts.some(account => account.code.join('.') === code)
+    ) {
       errors.code = 'Código já existente';
     }
 
@@ -99,6 +116,27 @@ export default function CreateAccountForm({formRef}: CreateAccountFormProps) {
   }
 
   function handleSubmit() {
+    if (isEdit) {
+      if (originalAccount.current.code === formik.values.code) {
+        updateAccount({
+          code: formik.values.code,
+          name: formik.values.name,
+          isRevenue: formik.values.isRevenue,
+          launch: formik.values.launch,
+        });
+        navigation.goBack();
+        return;
+      }
+    }
+
+    // if (isEdit) {
+    //   if (originalAccount.current.code !== formik.values.code) {
+    //     // that means that it must be created new
+    //     // AND the old one must be deleted
+    //     // BONUS: warn that children will be deleted too
+    //   }
+    // }
+
     const hasParent = !!formik.values.parentAccount;
     const newCode = formik.values.code.split('.');
     const newIndex = newCode[newCode.length - 1];
@@ -207,6 +245,18 @@ export default function CreateAccountForm({formRef}: CreateAccountFormProps) {
           <Select.Item value={true} label="Sim" />
         </Select>
       </LabeledInput>
+      {/* TODO: remove */}
+      <Text>{JSON.stringify({isEdit})}</Text>
+      <Button
+        title="check ref"
+        onPress={() => {
+          console.log({
+            form: formik.values.code,
+            fromRoue: originalAccount.current.code,
+          });
+          console.log(originalAccount.current);
+        }}
+      />
     </View>
   );
 }
