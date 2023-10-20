@@ -17,7 +17,6 @@ export default function Modal({
 }: PropsWithChildren<ModalProps>) {
   return (
     <Portal
-      // get the collor from the R
       theme={{
         colors: {backdrop: 'rgba(0,0,0,0.4)'},
       }}>

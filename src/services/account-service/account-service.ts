@@ -58,5 +58,3 @@ export function suggestNodes(
     return {parent: parentIndex, children: [...parentIndex, latestChildId + 1]};
   }
 }
-
-// suggestNodes([1,1], accounts.children)

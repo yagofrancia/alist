@@ -2,9 +2,7 @@ import {StyleSheet} from 'react-native';
 import R from '../../../res';
 
 const styles = StyleSheet.create({
-  root: {
-    // backgroundColor: R.colors.foreground,
-  },
+  root: {},
   content: {
     maxHeight: 400,
     marginHorizontal: 50,

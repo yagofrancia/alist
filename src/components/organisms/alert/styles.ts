@@ -1,9 +1,7 @@
 import {StyleSheet} from 'react-native';
 
 const styles = StyleSheet.create({
-  root: {
-    // borderWidth: 1,
-  },
+  root: {},
   action: {
     flexDirection: 'row',
     justifyContent: 'space-between',
