@@ -24,7 +24,10 @@ Thursday
 - ~~the isRevenue validation difference from parent must be shown in the isRevenue select~~
 - ~~add account code in the header when editing~~
 - ~~make the search work~~ 
-- clean the code, removing commentary and logs
+- ~~clean the code, removing commentary and logs~~
+
+Friday
+- generate the apk
 
 extras:
 - make the searchbar floating
