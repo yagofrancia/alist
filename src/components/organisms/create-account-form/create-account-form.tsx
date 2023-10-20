@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, View} from 'react-native';
+import {View} from 'react-native';
 import styles from './styles';
 import LabeledInput from '../../molecules/labeled-input/labeled-input';
 import Select from '../../molecules/select';
@@ -11,7 +11,6 @@ import {produce} from 'immer';
 import AccountService from '../../../services/account-service';
 import {useNavigation} from '@react-navigation/native';
 import TextService from '../../../services/text-service';
-import Text from '../../atoms/text/text';
 
 type FormShape = {
   parentAccount: string;
@@ -56,7 +55,7 @@ export default function CreateAccountForm({
   const {flattenedAccounts, accounts, setAccounts, updateAccount} =
     useAccounts();
   const isEdit = !!params;
-  const originalAccount = React.useRef({...params});
+  // const originalAccount = React.useRef({...params});
   const navigation = useNavigation();
   const formik = useFormik<FormShape>({
     initialValues: {
@@ -117,25 +116,15 @@ export default function CreateAccountForm({
 
   function handleSubmit() {
     if (isEdit) {
-      if (originalAccount.current.code === formik.values.code) {
-        updateAccount({
-          code: formik.values.code,
-          name: formik.values.name,
-          isRevenue: formik.values.isRevenue,
-          launch: formik.values.launch,
-        });
-        navigation.goBack();
-        return;
-      }
+      updateAccount({
+        code: formik.values.code,
+        name: formik.values.name,
+        isRevenue: formik.values.isRevenue,
+        launch: formik.values.launch,
+      });
+      navigation.goBack();
+      return;
     }
-
-    // if (isEdit) {
-    //   if (originalAccount.current.code !== formik.values.code) {
-    //     // that means that it must be created new
-    //     // AND the old one must be deleted
-    //     // BONUS: warn that children will be deleted too
-    //   }
-    // }
 
     const hasParent = !!formik.values.parentAccount;
     const newCode = formik.values.code.split('.');
@@ -199,7 +188,8 @@ export default function CreateAccountForm({
       <LabeledInput label="Conta pai">
         <Select
           onChange={handleParentAccountChange}
-          value={formik.values.parentAccount}>
+          value={formik.values.parentAccount}
+          editable={!isEdit}>
           <Select.Item value="" label="Nenhuma" />
           {flattenedAccounts
             .filter(account => !account.launch)
@@ -220,6 +210,7 @@ export default function CreateAccountForm({
           value={formik.values.code}
           onChange={formik.handleChange('code')}
           placeholder="Insira um código"
+          editable={!isEdit}
         />
       </LabeledInput>
       <LabeledInput label="Nome" error={formik.errors.name}>
@@ -245,18 +236,6 @@ export default function CreateAccountForm({
           <Select.Item value={true} label="Sim" />
         </Select>
       </LabeledInput>
-      {/* TODO: remove */}
-      <Text>{JSON.stringify({isEdit})}</Text>
-      <Button
-        title="check ref"
-        onPress={() => {
-          console.log({
-            form: formik.values.code,
-            fromRoue: originalAccount.current.code,
-          });
-          console.log(originalAccount.current);
-        }}
-      />
     </View>
   );
 }

@@ -20,6 +20,9 @@ Thursday
 - add scrollviews to where is needed
 - create the modal UI and functionality
 - render the items in a flatlist
+- add a validation rule to prevent changing isRevenue if has children
+- add a validation rule to prevent changing launch to true if has children
+- add account code in the header when editing
 
 extras:
 - make the searchbar floating
