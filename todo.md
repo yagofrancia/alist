@@ -23,7 +23,7 @@ Thursday
 - ~~add a validation rule to prevent changing launch to true if has children~~
 - ~~the isRevenue validation difference from parent must be shown in the isRevenue select~~
 - ~~add account code in the header when editing~~
-- make the search work (peharps using some hook to improve performance and debounce)
+- ~~make the search work~~ 
 - clean the code, removing commentary and logs
 
 extras:
@@ -33,3 +33,4 @@ extras:
 - add the rubik font
 - find better icons for create and back icons
 - add placeholder to texts
+- (peharps using some hook to improve performance and debounce)

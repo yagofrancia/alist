@@ -2,6 +2,7 @@ const colors = {
   background: '#622490',
   backgroundSecondary: '#F0EDF5',
   foreground: '#ffffff',
+  grayVeryLight: '#d1d1d1',
   grayLight: '#A0A0B2',
   grayMedium: '#6A6A6A',
   grayDark: '#3D3D4C',

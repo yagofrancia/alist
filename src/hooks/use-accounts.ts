@@ -20,8 +20,12 @@ type AccountCreate = {
 };
 
 export default function useAccounts() {
-  const {accounts, setAccounts} = React.useContext(AccountContext);
+  const {accounts, setAccounts, search} = React.useContext(AccountContext);
   const flattenedAccounts = AccountService.flatten(accounts).splice(1);
+  const filteredAccounts = React.useMemo(
+    () => flattenedAccounts.filter(account => account.name.startsWith(search)),
+    [flattenedAccounts, search],
+  );
 
   async function createAccount(params: AccountCreate) {
     const {parentAccount, code, name, isRevenue, launch} = params;
@@ -108,6 +112,7 @@ export default function useAccounts() {
   return {
     accounts,
     flattenedAccounts,
+    filteredAccounts,
     setAccounts,
     removeAccount,
     updateAccount,

@@ -6,7 +6,7 @@ import Text from '../../atoms/text/text';
 import useAccounts from '../../../hooks/use-accounts';
 
 export default function Accounts() {
-  const {flattenedAccounts} = useAccounts();
+  const {filteredAccounts} = useAccounts();
 
   return (
     <View style={styles.root}>
@@ -15,11 +15,11 @@ export default function Accounts() {
           Listagem
         </Text>
         <Text typography="roboto15_auto_regular" color="grayLight">
-          {flattenedAccounts.length} registros
+          {filteredAccounts.length} registros
         </Text>
       </View>
       <FlatList
-        data={flattenedAccounts}
+        data={filteredAccounts}
         keyExtractor={({code}) => code.join('')}
         renderItem={({item}) => (
           <AccountItem

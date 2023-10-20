@@ -1,8 +1,10 @@
 import React from 'react';
 import {
   NativeSyntheticEvent,
+  StyleProp,
   TextInput,
   TextInputChangeEventData,
+  TextStyle,
 } from 'react-native';
 import styles from './styles';
 import R from '../../../res';
@@ -11,7 +13,9 @@ type TextFieldProps = {
   editable?: boolean;
   value: string;
   placeholder?: string;
-  onChange: (e: string | React.ChangeEvent<any>) => void;
+  style?: StyleProp<TextStyle>;
+  placeholderTextColor?: string;
+  onChange: (e: string) => void;
 };
 
 export default function TextField({
@@ -19,6 +23,8 @@ export default function TextField({
   value,
   onChange,
   placeholder,
+  style,
+  placeholderTextColor = R.colors.grayLight,
 }: TextFieldProps) {
   function handleChange(e: NativeSyntheticEvent<TextInputChangeEventData>) {
     onChange(e.nativeEvent.text);
@@ -26,11 +32,11 @@ export default function TextField({
   return (
     <TextInput
       editable={editable}
-      style={styles.root}
+      style={[styles.root, style]}
       value={value}
       placeholder={placeholder}
       onChange={handleChange}
-      placeholderTextColor={R.colors.grayLight}
+      placeholderTextColor={placeholderTextColor}
     />
   );
 }

@@ -4,6 +4,8 @@ import RepositoryService from '../services/repository-service';
 type AccountContextType = {
   accounts: NodeAccount;
   setAccounts: React.Dispatch<React.SetStateAction<NodeAccount>>;
+  search: string;
+  setSearch: React.Dispatch<React.SetStateAction<string>>;
 };
 
 const initialData = {
@@ -18,6 +20,7 @@ export function AccountProvider({children}: PropsWithChildren) {
   const [accounts, setAccounts] = React.useState<NodeAccount>(
     initialData.accounts,
   );
+  const [search, setSearch] = React.useState('');
 
   React.useEffect(() => {
     fetchLocalData();
@@ -38,7 +41,7 @@ export function AccountProvider({children}: PropsWithChildren) {
   };
 
   return (
-    <AccountContext.Provider value={{accounts, setAccounts}}>
+    <AccountContext.Provider value={{accounts, setAccounts, search, setSearch}}>
       {children}
     </AccountContext.Provider>
   );
