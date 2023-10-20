@@ -10,11 +10,54 @@ type AccountUpdate = {
   launch?: boolean;
 };
 
+type AccountCreate = {
+  code: string;
+  name: string;
+  isRevenue: boolean;
+  launch: boolean;
+  parentAccount: string;
+};
+
 export default function useAccounts() {
   const {accounts, setAccounts} = React.useContext(AccountContext);
   const flattenedAccounts = AccountService.flatten(accounts).splice(1);
 
-  // TODO: bring the logic to add accounts to here (like removeAccount does)
+  function createAccount(params: AccountCreate) {
+    const {parentAccount, code, name, isRevenue, launch} = params;
+
+    const hasParent = !!parentAccount;
+    const newCode = code.split('.');
+    const newIndex = newCode[newCode.length - 1];
+    const parentCode = parentAccount.split('.');
+
+    const newNode: NodeAccount = {
+      name,
+      isRevenue,
+      launch,
+    };
+
+    const newState = hasParent
+      ? produce(accounts, draft => {
+          const parentNode = AccountService.getNodeById(
+            draft.children ?? {},
+            parentCode,
+          );
+
+          if (parentNode.children) {
+            parentNode.children[newIndex] = newNode;
+          } else {
+            parentNode.children = {'1': newNode};
+          }
+        })
+      : produce(accounts, draft => {
+          if (draft.children) {
+            draft.children[newIndex] = newNode;
+          } else {
+            draft.children = newNode;
+          }
+        });
+    setAccounts(newState);
+  }
 
   function updateAccount(params: AccountUpdate) {
     const newState = produce(accounts, draft => {
@@ -43,7 +86,6 @@ export default function useAccounts() {
       }
       delete parentNode.children[childKey];
     });
-
     setAccounts(newState);
   }
 
@@ -53,5 +95,6 @@ export default function useAccounts() {
     setAccounts,
     removeAccount,
     updateAccount,
+    createAccount,
   };
 }

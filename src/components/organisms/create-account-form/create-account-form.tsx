@@ -7,7 +7,6 @@ import TextField from '../../molecules/text-field/text-field';
 import {useFormik} from 'formik';
 import useAccounts from '../../../hooks/use-accounts';
 import * as yup from 'yup';
-import {produce} from 'immer';
 import AccountService from '../../../services/account-service';
 import {useNavigation} from '@react-navigation/native';
 import TextService from '../../../services/text-service';
@@ -52,10 +51,9 @@ export default function CreateAccountForm({
   formRef,
   params,
 }: CreateAccountFormProps) {
-  const {flattenedAccounts, accounts, setAccounts, updateAccount} =
+  const {flattenedAccounts, accounts, updateAccount, createAccount} =
     useAccounts();
   const isEdit = !!params;
-  // const originalAccount = React.useRef({...params});
   const navigation = useNavigation();
   const formik = useFormik<FormShape>({
     initialValues: {
@@ -126,39 +124,14 @@ export default function CreateAccountForm({
       return;
     }
 
-    const hasParent = !!formik.values.parentAccount;
-    const newCode = formik.values.code.split('.');
-    const newIndex = newCode[newCode.length - 1];
-    const parentCode = formik.values.parentAccount.split('.');
-
-    const newNode: NodeAccount = {
+    createAccount({
+      parentAccount: formik.values.parentAccount,
+      code: formik.values.code,
       name: formik.values.name,
       isRevenue: formik.values.isRevenue,
       launch: formik.values.launch,
-    };
+    });
 
-    const nextState = hasParent
-      ? produce(accounts, draft => {
-          const parentNode = AccountService.getNodeById(
-            draft.children ?? {},
-            parentCode,
-          );
-
-          if (parentNode.children) {
-            parentNode.children[newIndex] = newNode;
-          } else {
-            parentNode.children = {'1': newNode};
-          }
-        })
-      : produce(accounts, draft => {
-          if (draft.children) {
-            draft.children[newIndex] = newNode;
-          } else {
-            draft.children = newNode;
-          }
-        });
-
-    setAccounts(nextState);
     navigation.goBack();
   }
 
