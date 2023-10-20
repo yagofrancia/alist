@@ -1,5 +1,5 @@
 import React from 'react';
-import {View} from 'react-native';
+import {FlatList, View} from 'react-native';
 import styles from './styles';
 import AccountItem from '../../molecules/account-item';
 import Text from '../../atoms/text/text';
@@ -18,15 +18,20 @@ export default function Accounts() {
           {flattenedAccounts.length} registros
         </Text>
       </View>
-      {flattenedAccounts.map(account => (
-        <AccountItem
-          key={account.code.join('')}
-          code={account.code.join('.')}
-          name={account.name}
-          isRevenue={account.isRevenue}
-          launch={account.launch}
-        />
-      ))}
+      <FlatList
+        data={flattenedAccounts}
+        keyExtractor={({code}) => code.join('')}
+        renderItem={({item}) => (
+          <AccountItem
+            key={item.code.join('')}
+            code={item.code.join('.')}
+            name={item.name}
+            isRevenue={item.isRevenue}
+            launch={item.launch}
+          />
+        )}
+        showsVerticalScrollIndicator={false}
+      />
     </View>
   );
 }

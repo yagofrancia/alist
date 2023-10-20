@@ -1,5 +1,5 @@
 import React from 'react';
-import {View} from 'react-native';
+import {ScrollView, View} from 'react-native';
 import styles from './styles';
 import LabeledInput from '../../molecules/labeled-input/labeled-input';
 import Select from '../../molecules/select';
@@ -158,57 +158,59 @@ export default function CreateAccountForm({
 
   return (
     <View style={styles.root}>
-      <LabeledInput label="Conta pai">
-        <Select
-          onChange={handleParentAccountChange}
-          value={formik.values.parentAccount}
-          editable={!isEdit}>
-          <Select.Item value="" label="Nenhuma" />
-          {flattenedAccounts
-            .filter(account => !account.launch)
-            .map(account => {
-              const identifier = account.code.join('.');
-              return (
-                <Select.Item
-                  key={identifier}
-                  value={identifier}
-                  label={identifier}
-                />
-              );
-            })}
-        </Select>
-      </LabeledInput>
-      <LabeledInput label="Código" error={formik.errors.code}>
-        <TextField
-          value={formik.values.code}
-          onChange={formik.handleChange('code')}
-          placeholder="Insira um código"
-          editable={!isEdit}
-        />
-      </LabeledInput>
-      <LabeledInput label="Nome" error={formik.errors.name}>
-        <TextField
-          value={formik.values.name}
-          onChange={formik.handleChange('name')}
-          placeholder="Exemplo: Taxa condominial..."
-        />
-      </LabeledInput>
-      <LabeledInput label="Tipo">
-        <Select
-          onChange={handlePickerChange('isRevenue')}
-          value={formik.values.isRevenue}>
-          <Select.Item value={true} label="Receita" />
-          <Select.Item value={false} label="Custo" />
-        </Select>
-      </LabeledInput>
-      <LabeledInput label="Aceita lançamentos">
-        <Select
-          onChange={handlePickerChange('launch')}
-          value={formik.values.launch}>
-          <Select.Item value={false} label="Não" />
-          <Select.Item value={true} label="Sim" />
-        </Select>
-      </LabeledInput>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <LabeledInput label="Conta pai">
+          <Select
+            onChange={handleParentAccountChange}
+            value={formik.values.parentAccount}
+            editable={!isEdit}>
+            <Select.Item value="" label="Nenhuma" />
+            {flattenedAccounts
+              .filter(account => !account.launch)
+              .map(account => {
+                const identifier = account.code.join('.');
+                return (
+                  <Select.Item
+                    key={identifier}
+                    value={identifier}
+                    label={identifier}
+                  />
+                );
+              })}
+          </Select>
+        </LabeledInput>
+        <LabeledInput label="Código" error={formik.errors.code}>
+          <TextField
+            value={formik.values.code}
+            onChange={formik.handleChange('code')}
+            placeholder="Insira um código"
+            editable={!isEdit}
+          />
+        </LabeledInput>
+        <LabeledInput label="Nome" error={formik.errors.name}>
+          <TextField
+            value={formik.values.name}
+            onChange={formik.handleChange('name')}
+            placeholder="Exemplo: Taxa condominial..."
+          />
+        </LabeledInput>
+        <LabeledInput label="Tipo">
+          <Select
+            onChange={handlePickerChange('isRevenue')}
+            value={formik.values.isRevenue}>
+            <Select.Item value={true} label="Receita" />
+            <Select.Item value={false} label="Custo" />
+          </Select>
+        </LabeledInput>
+        <LabeledInput label="Aceita lançamentos">
+          <Select
+            onChange={handlePickerChange('launch')}
+            value={formik.values.launch}>
+            <Select.Item value={false} label="Não" />
+            <Select.Item value={true} label="Sim" />
+          </Select>
+        </LabeledInput>
+      </ScrollView>
     </View>
   );
 }
